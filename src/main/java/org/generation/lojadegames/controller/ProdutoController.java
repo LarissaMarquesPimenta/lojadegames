@@ -40,19 +40,19 @@ public class ProdutoController {
 		return ResponseEntity.ok(produtoRepository.findAll());
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping("/{id}") //busca por id
 	public ResponseEntity<Produto> getById(@PathVariable Long id){
 		return produtoRepository.findById(id)
 				.map(resposta -> ResponseEntity.ok(resposta))
 				.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 	}
 	
-	@GetMapping("/titulo/{titulo}")
+	@GetMapping("/titulo/{titulo}") //busca por titulo
 	public ResponseEntity<List<Produto>> getByTitulo(@PathVariable String titulo){
 		return ResponseEntity.ok(produtoRepository.findAllByTituloContainingIgnoreCase(titulo));
 	}
 
-	@PostMapping
+	@PostMapping //adicionar um elemento
 	public ResponseEntity<Produto> post(@Valid @RequestBody Produto produto){
 		if (categoriaRepository.existsById(produto.getCategoria().getId()))
 			return ResponseEntity.status(HttpStatus.CREATED)
@@ -61,7 +61,7 @@ public class ProdutoController {
 		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "O categoria não existe!", null);
 	}
 	
-	@PutMapping
+	@PutMapping //editar um elemento
 	public ResponseEntity<Produto> put(@Valid @RequestBody Produto produto){
 		if (produtoRepository.existsById(produto.getId())){
 			
@@ -78,7 +78,7 @@ public class ProdutoController {
 	}
 	
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/{id}") //deletar um elemento
 	public void delete(@PathVariable Long id) {
 		Optional<Produto> produto = produtoRepository.findById(id);
 		

@@ -17,9 +17,12 @@ public class Produto {
 	
 	@ManyToOne
 	@JsonIgnoreProperties("produto")
-	
 	private Categoria categoria;
 	
+	@ManyToOne
+	@JsonIgnoreProperties("postagem")
+	private Usuario usuario;
+
     @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) 
 	private Long id;
@@ -72,6 +75,15 @@ public class Produto {
 		this.info = info;
 
 	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+	
 	
 }
 	
